@@ -24,7 +24,10 @@ const AboutPage = () => {
     fetchNosotros();
   }, []);
 
-  const getSection = (cat) => content.find(c => c.categoria === cat);
+  const getSection = (category) => {
+    const section = content.find(c => c.categoria === category);
+    return section || { titulo: '', contenido: '', valor: '' };
+  };
   const getRoadmap = () => content.filter(c => c.categoria === 'roadmap');
 
   if (loading) {

@@ -3,12 +3,7 @@ import { supabaseAdmin } from '../lib/supabase';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { 
-  Users, Calendar, MapPin, 
-  Phone, Globe, BarChart3, 
-  LayoutDashboard, LogOut, Search,
-  RefreshCw, CheckCircle2, Clock,
-  Settings, ChevronRight, ShieldCheck,
-  MessageSquare, Eye, Tablet, Info
+  MessageSquare, Eye, Tablet, Info, Leaf
 } from 'lucide-react';
 
 const AdminPanel = ({ onLogout }) => {
@@ -421,7 +416,7 @@ const AdminPanel = ({ onLogout }) => {
                     </div>
                     <div className="space-y-3 mb-6">
                        <div className="flex items-center gap-2 text-xs text-gray-600 font-medium">
-                          <Wheat className="h-4 w-4 text-amber-500" />
+                          <Leaf className="h-4 w-4 text-amber-500" />
                           <span>{lead.produccion} ({lead.tamano_produccion})</span>
                        </div>
                        <div className="flex items-center gap-2 text-xs text-gray-600 font-medium">
