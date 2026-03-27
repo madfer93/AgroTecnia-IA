@@ -19,6 +19,7 @@ import AdminPanel from './components/AdminPanel';
 import LegalPage from './components/LegalPage';
 import AboutPage from './components/AboutPage';
 import PricingPage from './components/PricingPage';
+import AiAssistant from './components/AiAssistant';
 
 // --- Componente LandingPage (UI Principal) ---
 const LandingPage = () => {
@@ -498,7 +499,8 @@ function App() {
         <Route path="/legal" element={<LegalPage />} />
         <Route path="/nosotros" element={<AboutPage />} />
         <Route path="/precios" element={<PricingPage />} />
-        <Route
+        <Route 
+          path="/admin"
           element={
             session ? (
               <AdminPanel onLogout={handleLogout} />
@@ -509,6 +511,7 @@ function App() {
         />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <AiAssistant />
     </Router>
   );
 }

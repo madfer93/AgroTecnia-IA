@@ -5,4 +5,10 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 const supabaseServiceRole = import.meta.env.VITE_SUPABASE_SERVICE_ROLE;
 
 export const supabase = createClient(supabaseUrl, supabaseAnonKey);
-export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRole);
+export const supabaseAdmin = createClient(supabaseUrl, supabaseServiceRole, {
+  auth: {
+    persistSession: false,
+    autoRefreshToken: false,
+    detectSessionInUrl: false
+  }
+});

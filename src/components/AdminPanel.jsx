@@ -3,7 +3,12 @@ import { supabaseAdmin } from '../lib/supabase';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { 
-  MessageSquare, Eye, Tablet, Info, Leaf
+  Users, Calendar, MapPin, 
+  Phone, Globe, BarChart3, 
+  LayoutDashboard, LogOut, Search,
+  RefreshCw, CheckCircle2, Clock,
+  Settings, ChevronRight, ShieldCheck,
+  MessageSquare, Eye, Tablet, Info, Leaf, X, Wheat
 } from 'lucide-react';
 
 const AdminPanel = ({ onLogout }) => {
@@ -20,6 +25,7 @@ const AdminPanel = ({ onLogout }) => {
   const [editingNosotros, setEditingNosotros] = useState(null);
   const [showPreview, setShowPreview] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [selectedLead, setSelectedLead] = useState(null); // Added for details modal
 
   const fetchData = async () => {
     setLoading(true);
@@ -159,7 +165,23 @@ const AdminPanel = ({ onLogout }) => {
       alert('Error al actualizar estado: ' + error.message);
     } else {
       setDiagnosticos(diagnosticos.map(d => d.id === id ? {...d, estado: newStatus} : d));
+      if (selectedLead && selectedLead.id === id) {
+        setSelectedLead({...selectedLead, estado: newStatus});
+      }
     }
+  };
+
+  const handleContact = (lead) => {
+    // 1. Update status to 'contactado' if it was 'nuevo'
+    if (lead.status === 'nuevo' || lead.estado === 'nuevo') {
+      updateLeadStatus(lead.id, 'contactado');
+    }
+    // 2. Construct professional message
+    const message = `Hola *${lead.nombre}*, ¡un gusto saludarte! 👋✨\n\nTe escribo desde *AgroTecnia IA* (JyM Tech Solutions). Recibimos tu diagnóstico para tu producción de *${lead.produccion}* (${lead.tamano_produccion}) en *${lead.ubicacion}*.\n\nEntendemos que buscas resolver: _"${lead.problematica}"_.\n\n¿Te parece si conversamos un momento para ver cómo nuestra IA puede ayudarte a optimizar esos resultados? 🚜🌾`;
+    
+    // 3. Open WhatsApp with template
+    const waLink = `https://wa.me/${(lead.whatsapp || '').replace(/\+/g, '')}?text=${encodeURIComponent(message)}`;
+    window.open(waLink, '_blank');
   };
 
   const filteredData = diagnosticos.filter(item => 
@@ -425,17 +447,18 @@ const AdminPanel = ({ onLogout }) => {
                        </div>
                     </div>
                     <div className="flex gap-2">
-                       <a 
-                         href={`https://wa.me/${(lead.whatsapp || '').replace(/\+/g, '')}`}
-                         target="_blank"
-                         rel="noopener noreferrer"
+                       <button 
+                         onClick={() => handleContact(lead)}
                          className="flex-1 bg-gray-900 text-white text-[10px] font-black uppercase tracking-widest py-2 rounded-xl text-center hover:bg-gray-800 transition"
                        >
                          WhatsApp
-                       </a>
-                       <button className="flex-1 bg-gray-50 text-gray-400 text-[10px] font-black uppercase tracking-widest py-2 rounded-xl border border-gray-100">
-                         Detalles
                        </button>
+                        <button 
+                          onClick={() => setSelectedLead(lead)}
+                          className="flex-1 bg-gray-900 border border-gray-900 text-white hover:bg-white hover:text-gray-900 text-[10px] font-black uppercase tracking-widest py-2 rounded-xl transition-all"
+                        >
+                          Detalles
+                        </button>
                     </div>
                  </div>
                ))}
@@ -797,6 +820,90 @@ const AdminPanel = ({ onLogout }) => {
             </div>
           )}
         </div>
+
+        {/* Lead Details Modal */}
+        {selectedLead && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <div 
+              className="absolute inset-0 bg-gray-900/60 backdrop-blur-sm"
+              onClick={() => setSelectedLead(null)}
+            />
+            <div className="relative bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
+               <div className="bg-gray-900 p-8 text-white flex justify-between items-start">
+                  <div className="flex items-center gap-4">
+                     <div className="w-14 h-14 bg-primary-600 rounded-2xl flex items-center justify-center text-2xl font-black">
+                        {selectedLead.nombre.charAt(0)}
+                     </div>
+                     <div>
+                        <h2 className="text-2xl font-black tracking-tighter uppercase">{selectedLead.nombre}</h2>
+                        <p className="text-primary-400 font-bold text-xs uppercase tracking-widest flex items-center gap-2">
+                           <MapPin className="h-3 w-3" /> {selectedLead.ubicacion}
+                        </p>
+                     </div>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedLead(null)}
+                    className="p-2 hover:bg-white/10 rounded-full transition"
+                  >
+                    <X className="h-6 w-6" />
+                  </button>
+               </div>
+               
+               <div className="p-8 space-y-8 max-h-[70vh] overflow-y-auto">
+                  <div className="grid grid-cols-2 gap-6">
+                     <div className="bg-gray-50 p-4 rounded-2xl">
+                        <span className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Producción</span>
+                        <p className="font-bold text-gray-900">{selectedLead.produccion}</p>
+                        <p className="text-xs text-gray-500">{selectedLead.tamano_produccion}</p>
+                     </div>
+                     <div className="bg-gray-50 p-4 rounded-2xl">
+                        <span className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Gestión Actual</span>
+                        <p className="font-bold text-gray-900">{selectedLead.gestion_actual}</p>
+                        <p className="text-xs text-gray-500">Tecnología: {selectedLead.uso_tecnologia}</p>
+                     </div>
+                  </div>
+
+                  <div>
+                     <span className="block text-[10px] font-black text-primary-600 uppercase tracking-widest mb-2">Problemática Detectada</span>
+                     <div className="bg-primary-50 p-6 rounded-3xl border border-primary-100">
+                        <p className="text-gray-700 font-medium leading-relaxed italic">
+                           "{selectedLead.problematica || 'Sin detalles adicionales.'}"
+                        </p>
+                     </div>
+                  </div>
+
+                  <div className="flex items-center justify-between p-4 bg-gray-50 rounded-2xl">
+                     <div>
+                        <span className="block text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Requiere IA Medicina</span>
+                        <p className="font-bold text-gray-900 uppercase text-xs">{selectedLead.necesita_ia_medicina}</p>
+                     </div>
+                     <div className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${
+                        selectedLead.estado === 'nuevo' ? 'bg-amber-100 text-amber-600' :
+                        selectedLead.estado === 'contactado' ? 'bg-blue-100 text-blue-600' :
+                        'bg-green-100 text-green-600'
+                     }`}>
+                        {selectedLead.estado}
+                     </div>
+                  </div>
+               </div>
+
+               <div className="p-8 bg-gray-50 flex gap-4">
+                  <button 
+                    onClick={() => handleContact(selectedLead)}
+                    className="flex-1 bg-primary-600 text-white text-xs font-black uppercase tracking-widest py-4 rounded-2xl text-center hover:bg-primary-700 transition shadow-lg shadow-green-100 flex items-center justify-center gap-2"
+                  >
+                    <MessageSquare className="h-4 w-4" /> Abrir WhatsApp
+                  </button>
+                  <button 
+                    onClick={() => setSelectedLead(null)}
+                    className="px-8 py-4 bg-white border border-gray-200 text-gray-400 text-xs font-black uppercase tracking-widest rounded-2xl hover:bg-gray-100 transition"
+                  >
+                    Cerrar
+                  </button>
+               </div>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Link } from 'react-router-dom';
-import { 
-  ChevronLeft, Sprout, Target, 
-  Rocket, ShieldCheck, Globe, 
-  ArrowRight, Users, MessageSquare 
+import {
+  ChevronLeft, Sprout, Target,
+  Rocket, ShieldCheck, Globe,
+  ArrowRight, Users, MessageSquare
 } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
 
 const AboutPage = () => {
   const [content, setContent] = useState([]);
@@ -17,7 +18,7 @@ const AboutPage = () => {
         .from('config_nosotros')
         .select('*')
         .order('orden', { ascending: true });
-      
+
       if (!error) setContent(data);
       setLoading(false);
     };
@@ -59,24 +60,29 @@ const AboutPage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="relative py-24 bg-white overflow-hidden">
+      <section className="relative py-20 lg:py-32 bg-white overflow-hidden border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center lg:text-left lg:max-w-2xl">
-            <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.3em] mb-4 inline-block">Innovación para la Orinoquía</span>
-            <h1 className="text-5xl md:text-7xl font-black text-gray-900 leading-[0.9] tracking-tighter uppercase mb-8">
-              Soberanía <span className="text-primary-600 italic text-4xl md:text-6xl block mt-2">Tecnológica Rural</span>
-            </h1>
-            <p className="text-xl text-gray-500 font-medium leading-relaxed mb-10">
-              En **JyM Tech Solutions**, creemos que el agricultor no solo merece mejores herramientas, sino el control total de su futuro productivo.
-            </p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+            <div className="text-center lg:text-left order-2 lg:order-1">
+              <span className="text-[10px] font-black text-primary-600 uppercase tracking-[0.3em] mb-4 inline-block bg-primary-50 px-3 py-1 rounded-full">Identidad & Propósito</span>
+              <h1 className="text-5xl md:text-7xl font-black text-gray-900 leading-[0.9] tracking-tighter uppercase mb-8">
+                Soberanía <span className="text-primary-600 italic text-4xl md:text-6xl block mt-2">Tecnológica Rural</span>
+              </h1>
+              <div className="text-lg text-gray-500 font-medium leading-relaxed mb-10 prose prose-primary max-w-none">
+                <ReactMarkdown>
+                  {historia?.contenido || 'En **JyM Tech Solutions**, transformamos la agricultura con inteligencia artificial y datos satelitales.'}
+                </ReactMarkdown>
+              </div>
+            </div>
+            <div className="relative order-1 lg:order-2">
+               <div className="absolute -inset-10 bg-primary-100/30 rounded-full blur-[100px] -z-10 animate-pulse" />
+               <img 
+                 src="/agrotecnia-vision.png" 
+                 alt="Visión de AgroTecnia" 
+                 className="w-full aspect-square lg:aspect-video object-cover rounded-[4rem] shadow-2xl shadow-green-100 border-[12px] border-white ring-1 ring-gray-100"
+               />
+            </div>
           </div>
-        </div>
-        <div className="lg:absolute lg:top-0 lg:right-0 lg:w-1/2 lg:h-full mt-12 lg:mt-0">
-          <img 
-            src="/agrotecnia-vision.png" 
-            alt="Visión de AgroTecnia" 
-            className="w-full h-full object-cover lg:rounded-l-[4rem] shadow-2xl shadow-green-100"
-          />
         </div>
       </section>
 
@@ -116,22 +122,22 @@ const AboutPage = () => {
       {/* Historia */}
       <section className="py-32 bg-white">
         <div className="max-w-4xl mx-auto px-6 text-center">
-           <Sprout className="h-12 w-12 text-primary-600 mx-auto mb-8" />
-           <h2 className="text-4xl font-black text-gray-900 uppercase tracking-tighter mb-8">{historia?.titulo || '¿Quiénes Somos?'}</h2>
-           <p className="text-xl text-gray-600 leading-relaxed font-medium italic">
-             "{historia?.contenido || 'Cargando historia...'}"
-           </p>
-           <div className="mt-12 flex items-center justify-center gap-8">
-              <div>
-                 <p className="text-3xl font-black text-primary-600 leading-none">495502</p>
-                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Matrícula Mercantil</p>
-              </div>
-              <div className="w-px h-10 bg-gray-200" />
-              <div>
-                 <p className="text-3xl font-black text-primary-600 leading-none">Meta</p>
-                 <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Origen Local</p>
-              </div>
-           </div>
+          <Sprout className="h-12 w-12 text-primary-600 mx-auto mb-8" />
+          <h2 className="text-4xl font-black text-gray-900 uppercase tracking-tighter mb-8">{historia?.titulo || '¿Quiénes Somos?'}</h2>
+          <p className="text-xl text-gray-600 leading-relaxed font-medium italic">
+            "{historia?.contenido || 'Cargando historia...'}"
+          </p>
+          <div className="mt-12 flex items-center justify-center gap-8">
+            <div>
+              <p className="text-3xl font-black text-primary-600 leading-none">495502</p>
+              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Matrícula Mercantil</p>
+            </div>
+            <div className="w-px h-10 bg-gray-200" />
+            <div>
+              <p className="text-3xl font-black text-primary-600 leading-none">Meta</p>
+              <p className="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Origen Local</p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -169,7 +175,7 @@ const AboutPage = () => {
 
                   <div className="relative z-10">
                     <div className="w-16 h-16 bg-primary-600 rounded-full border-4 border-gray-900 flex items-center justify-center shadow-2xl">
-                       <Sprout className="h-6 w-6 text-white" />
+                      <Sprout className="h-6 w-6 text-white" />
                     </div>
                   </div>
 
@@ -184,23 +190,23 @@ const AboutPage = () => {
       {/* CTA Footer */}
       <section className="py-24 bg-white text-center">
         <div className="max-w-3xl mx-auto px-6">
-           <h2 className="text-3xl font-black text-gray-900 uppercase tracking-tighter mb-8">
-             ¿Listo para ser parte de la revolución tecnológica?
-           </h2>
-           <Link to="/#diagnostico" className="inline-flex items-center gap-3 bg-primary-600 text-white px-10 py-5 rounded-3xl font-black text-sm uppercase tracking-widest hover:bg-primary-700 transition shadow-xl shadow-green-100">
-             Iniciar Diagnóstico IA <ArrowRight className="h-5 w-5" />
-           </Link>
+          <h2 className="text-3xl font-black text-gray-900 uppercase tracking-tighter mb-8">
+            ¿Listo para ser parte de la revolución tecnológica?
+          </h2>
+          <Link to="/#diagnostico" className="inline-flex items-center gap-3 bg-primary-600 text-white px-10 py-5 rounded-3xl font-black text-sm uppercase tracking-widest hover:bg-primary-700 transition shadow-xl shadow-green-100">
+            Iniciar Diagnóstico IA <ArrowRight className="h-5 w-5" />
+          </Link>
         </div>
       </section>
 
       {/* Mini Footer */}
       <footer className="py-12 border-t border-gray-100 bg-white">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
-           <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">&copy; {new Date().getFullYear()} AgroTecnia IA by JyM Tech Solutions</p>
-           <div className="flex items-center gap-6">
-              <Link to="/legal" className="text-[10px] text-gray-400 font-black uppercase tracking-widest hover:text-primary-600">Privacidad</Link>
-              <Link to="/legal" className="text-[10px] text-gray-400 font-black uppercase tracking-widest hover:text-primary-600">Legal</Link>
-           </div>
+          <p className="text-xs text-gray-400 font-bold uppercase tracking-widest">&copy; {new Date().getFullYear()} AgroTecnia IA by JyM Tech Solutions</p>
+          <div className="flex items-center gap-6">
+            <Link to="/legal" className="text-[10px] text-gray-400 font-black uppercase tracking-widest hover:text-primary-600">Privacidad</Link>
+            <Link to="/legal" className="text-[10px] text-gray-400 font-black uppercase tracking-widest hover:text-primary-600">Legal</Link>
+          </div>
         </div>
       </footer>
     </div>
