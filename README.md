@@ -1,45 +1,55 @@
-# AgroTecnia JyM B2B (Módulo Agrícola) 🌾🤖
+# AgroTecnia IA 🌾🤖
 
-Landing Page corporativa y plataforma B2B enfocada en el sector rural y agropecuario de los Llanos Orientales. Desarrollado por **JyM Tech Solutions (Matrícula Mercantil 495502)**.
+### La Evolución Tecnológica del Campo Colombiano
+
+**AgroTecnia IA** es una plataforma integral de **AgriTech** diseñada para transformar los datos técnicos del campo en decisiones rentables y sostenibles. Desarrollada por [JyM Tech Solutions](https://jymtechsolutions.online), esta herramienta combina Inteligencia Artificial, análisis de suelos y monitoreo satelital en un ecosistema profesional y autogestionable.
 
 ---
 
-## 🗺️ ROADMAP DEL PROYECTO (Hoja de Ruta)
+## 🗺️ PROYECTO SaaS AGRÍCOLA (Hoja de Ruta)
 
-Este proyecto no es solo una página web; es el inicio de un **SaaS (Software as a Service) Agrícola**. A continuación, detallamos las fases estratégicas y técnicas:
+Este proyecto ha evolucionado de una landing page a una infraestructura **SaaS (Software as a Service)** robusta. A continuación, el estado actual de los módulos:
 
-### FASE 1: Construcción y Prototipado (ACTUAL) 🟡
-- [x] Inicialización del entorno con Vite + React.
-- [x] Configuración de Tailwind CSS y Lucide React (Íconos).
-- [x] Creación de `App.jsx` con diseño "Mobile First" pensado para conectividad y lectura en fincas.
-- [x] Módulos UI: Hero, Servicios (Agronomía, Zootecnia, IA, Clima), Dolores del Campo y Formulario de Diagnóstico.
+### FASE 1: Inteligencia de Negocios & UX (COMPLETADA) ✅
+- **Cerebro IA**: Implementación de tres roles especializados (Ingeniería SAT, Broker de Mercados y Fitopatología Digital).
+- **Diseño Resiliente**: Interfaz "Mobile First" optimizada para baja conectividad en zonas rurales.
+- **Formulario de Diagnóstico**: Captación inteligente de "Leads" con validación de datos técnicos de producción.
 
-### FASE 2: Despliegue y Pruebas Piloto (Próximos Pasos) 🔴
-- [ ] **Despliegue a Vercel:** Conectar este repositorio de GitHub a Vercel para que esté online y accesible mediante URL.
-- [ ] **Piloto "Dani":** Enviar el enlace en vivo a Dani. Su llenado del formulario servirá como prueba de Interfaz de Usuario (UI) y aseguramiento de calidad (QA).
-- [ ] **Captación en Cascada:** Dani comparte el enlace con colegas y vecinos. Se valida la recepción del mensaje e interés del mercado.
+### FASE 2: Validación & Cumplimiento (ACTUAL) 🟡
+- **Pruebas en Campo**: Fase de validación técnica realizada con productores líderes de la región para asegurar que las recomendaciones de la IA se ajusten a la realidad del suelo.
+- **Legal Compliance (Ley 1581)**: Integración total de Habeas Data, Políticas de Privacidad y Términos de Uso dinámicos desde la base de datos.
+- **Admin Panel V2**: Consola de administración avanzada para que el SuperAdmin gestione diagnósticos, políticas legales y Master Prompts en tiempo real.
 
-### FASE 3: Backend & Base de Datos (Integración) 🔴
-- [ ] **Conexión a Supabase:** Remplazar el envío del formulario estático por una inyección directa a tu base de datos central de clientes B2B (`leads_agricolas`).
-- [ ] **Notificación Activa:** Configurar un "Edge Function" en Supabase o webhook simple para que te notifique a tu WhatsApp apenas caiga un nuevo Lead. *(Eliminando a Make del proceso)*.
-
-### FASE 4: Módulo de IA "AgroBot" (Largo Plazo) 🔴
-- [ ] **Desarrollo del Botpress/WhatsApp Bot:** Crear los flujos específicos de "AgroBot" (Bitácora de Notas de voz gestionadas con Whisper/Llama, Alertas meteorológicas).
-- [ ] **API Groq/Gemini Vision:** Integrar la lectura de fotos fitosanitarias (diagnóstico de plagas) directo desde el canal de chat.
-- [ ] **Dashboard Cliente:** Habilitar un inicio de sesión dentro de esta página para que fincas más grandes vean un resumen en gráficos de sus gastos y cosechas.
+### FASE 3: Escalabilidad & Automatización (Próximos Pasos) 🔴
+- **Notificaciones WhatsApp API**: Envío automático del reporte de diagnóstico PDF directo al productor tras el análisis de la IA.
+- **Mapeo Satelital Dinámico**: Integración de APIs de Sentinel-2 para mostrar índices NDVI directamente en el panel del administrador.
+- **Dashboard de Rentabilidad**: Gráficos interactivos para que el agricultor visualice el retorno de inversión proyectado.
 
 ---
 
 ## 🛠️ Stack Tecnológico
-* **Frontend:** React + Tailwind CSS
-* **Despliegue:** Vercel (Próximamente)
-* **Base de Datos / Backend:** Supabase (Próximamente)
-* **Inteligencia Artificial:** Groq / Gemini (Próximamente Integrado)
+*   **Frontend**: React 19 + Vite (Rápido, moderno e interactivo).
+*   **Styling**: Vanilla CSS + Tailwind CSS (Diseño premium y responsive).
+*   **Base de Datos**: Supabase (PostgreSQL) con autenticación administrativa.
+*   **IA Engine**: Integración con Groq Cloud / Gemini (Llama 3 70B para diagnósticos).
+*   **Componentes**: Lucide React para iconografía técnica.
 
-## 💻 Instrucciones de Desarrollo Local
-Para previsualizar cómo va la página:
+## 💻 Desarrollo Local
+
+Para poner en marcha el entorno de desarrollo:
 
 ```bash
-npm install # Instalar dependencias 
-npm run dev # Levantar el servidor local
+# 1. Instalar dependencias
+npm install
+
+# 2. Configurar variables de entorno
+# Crea un archivo .env con tus credenciales de Supabase y Groq
+VITE_SUPABASE_URL=tu_url
+VITE_SUPABASE_ANON_KEY=tu_anon_key
+
+# 3. Iniciar servidor
+npm run dev
 ```
+
+---
+Desarrollado con ❤️ por **JyM Tech Solutions** - *Innovación para la Soberanía Tecnológica.*
